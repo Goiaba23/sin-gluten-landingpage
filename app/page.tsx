@@ -758,9 +758,9 @@ export default function LandingPage() {
       <Hero />
       <Beneficios />
       <Contenido />
+      <Oferta />
       <PruebaSocial />
       <FAQ />
-      <Oferta />
       <Footer />
     </main>
   );
