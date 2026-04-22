@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, X, Clock, Star, ArrowRight, Shield, Zap, BookOpen, UtensilsCrossed, Heart, ChevronDown, Menu, X as XIcon, Lock, Truck, CreditCard, Users, ShoppingBag, Sparkles, Plus, Minus, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Check, X, Clock, Star, ArrowRight, Shield, Zap, BookOpen, UtensilsCrossed, Heart, ChevronDown, Menu, X as XIcon, Lock, Truck, CreditCard, Users, ShoppingBag, Sparkles, Plus, Minus, AlertCircle, CheckCircle2, Flame, Leaf, Timer, Award } from "lucide-react";
 
 // ============================================
 // CONFIGURAÇÕES
@@ -15,27 +16,6 @@ const PRODUCT = {
   originalPrice: 39.99,
   discount: 63
 };
-
-// Imagensdos ebooks (use URLs do GitHub após upload)
-const IMAGES = {
-  main: "https://raw.githubusercontent.com/Goiaba23/sin-gluten-landingpage/main/images/ebook-main.jpg",
-  panaderia: "https://raw.githubusercontent.com/Goiaba23/sin-gluten-landingpage/main/images/panaderia.jpg",
-  ejercicios: "https://raw.githubusercontent.com/Goiaba23/sin-gluten-landingpage/main/images/ejercicios.jpg",
-  infusiones: "https://raw.githubusercontent.com/Goiaba23/sin-gluten-landingpage/main/images/infusiones.jpg",
-  snacks: "https://raw.githubusercontent.com/Goiaba23/sin-gluten-landingpage/main/images/snacks.jpg"
-};
-
-// Nomes de pessoas que compraram (notificações em tempo real)
-const RECENT_BUYERS = [
-  { name: "Marina S.", city: "São Paulo" },
-  { name: "Carlos M.", city: "Buenos Aires" },
-  { name: "Ana Paula R.", city: "Rio de Janeiro" },
-  { name: "Miguel Á.", city: "Santiago" },
-  { name: "Julia L.", city: "Brasília" },
-  { name: "Pedro H.", city: "Córdoba" },
-  { name: "Camila B.", city: "Lima" },
-  { name: "Roberto D.", city: "Montevideo" }
-];
 
 // ============================================
 // COMPONENTES
@@ -59,7 +39,7 @@ function Header() {
         isScrolled ? "bg-white/95 backdrop-blur-sm shadow-sm py-3" : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-5xl mx-auto px-5 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 bg-amber-600 rounded-lg flex items-center justify-center">
             <UtensilsCrossed className="w-5 h-5 text-white" />
@@ -109,7 +89,7 @@ function Header() {
 // Popup de Urgência - 10 minutos
 function UrgencyPopup() {
   const [isVisible, setIsVisible] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutos em segundos
+  const [timeLeft, setTimeLeft] = useState(10 * 60);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 3000);
@@ -198,6 +178,15 @@ function UrgencyPopup() {
 
 // Notificação de compra recente
 function RecentBuyers() {
+  const buyers = [
+    { name: "Marina S.", city: "São Paulo" },
+    { name: "Carlos M.", city: "Buenos Aires" },
+    { name: "Ana Paula R.", city: "Rio de Janeiro" },
+    { name: "Miguel Á.", city: "Santiago" },
+    { name: "Julia L.", city: "Brasília" },
+    { name: "Pedro H.", city: "Córdoba" }
+  ];
+  
   const [current, setCurrent] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -207,14 +196,11 @@ function RecentBuyers() {
       setTimeout(() => setIsVisible(false), 5000);
     };
 
-    // Primeira notificação após 5 segundos
     const timer1 = setTimeout(showNotification, 5000);
-    
-    // Notificações a cada 30 segundos
     const interval = setInterval(() => {
-      setCurrent(prev => (prev + 1) % RECENT_BUYERS.length);
+      setCurrent(prev => (prev + 1) % buyers.length);
       showNotification();
-    }, 30000);
+    }, 25000);
 
     return () => {
       clearTimeout(timer1);
@@ -237,9 +223,9 @@ function RecentBuyers() {
             </div>
             <div>
               <p className="text-sm font-semibold text-gray-900">
-                {RECENT_BUYERS[current].name} acabou de comprar!
+                {buyers[current].name} acabou de comprar!
               </p>
-              <p className="text-xs text-gray-500">São {RECENT_BUYERS[current].city}</p>
+              <p className="text-xs text-gray-500">de {buyers[current].city}</p>
             </div>
           </div>
         </motion.div>
@@ -249,7 +235,7 @@ function RecentBuyers() {
 }
 
 function Hero() {
-  const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutos
+  const [timeLeft, setTimeLeft] = useState(10 * 60);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -268,7 +254,7 @@ function Hero() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-100/40 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/3" />
       </div>
 
-      <div className="max-w-5xl mx-auto px-5 relative">
+      <div className="max-w-6xl mx-auto px-5 relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             {/* Urgency Banner */}
@@ -291,27 +277,27 @@ function Hero() {
               Panadería Sin Gluten<span className="text-amber-600"> Perfecta</span> en 40 Recetas
             </motion.h1>
 
-            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-base text-gray-600 mb-6 leading-relaxed max-w-md">
-              🎯 <strong>Última chance</strong> de garantir tu pack con 63% de descuento. 
-              Después de estos 10 minutos, el precio vuelve a <span className="text-gray-400 line-through">$39.99</span>.
+            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-lg text-gray-600 mb-6 leading-relaxed max-w-lg">
+              🎯 <strong>Última chance</strong> de garantizar tu pack con 63% de descuento. 
+              Después de estos 10 minutos, el precio vuelve a <span className="text-gray-400 line-through text-lg">$39.99</span>.
             </motion.p>
 
             {/* Price Display */}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="flex items-center gap-3 mb-6">
-              <span className="text-4xl font-bold text-gray-900">${PRODUCT.price}</span>
-              <span className="text-lg text-gray-400 line-through">${PRODUCT.originalPrice}</span>
-              <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">-{PRODUCT.discount}%</span>
+              <span className="text-5xl font-bold text-gray-900">${PRODUCT.price}</span>
+              <span className="text-xl text-gray-400 line-through">${PRODUCT.originalPrice}</span>
+              <span className="bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-lg">-{PRODUCT.discount}%</span>
             </motion.div>
 
             {/* Countdown - 10 minutos */}
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex items-center gap-2 mb-6 text-sm">
-              <span className="text-red-600 font-bold">¡Se acabará en:</span>
-              <div className="flex gap-1.5">
-                <div className="bg-red-600 text-white font-bold text-lg px-3 py-2 rounded-lg min-w-[60px] text-center">
-                  {String(minutes).padStart(2, '0')}<span className="text-xs ml-1 opacity-70">min</span>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mb-6">
+              <p className="text-red-600 font-bold mb-2">¡Se acabará en solo 10 minutos!</p>
+              <div className="flex gap-2">
+                <div className="bg-red-600 text-white font-bold text-2xl px-4 py-3 rounded-xl min-w-[80px] text-center">
+                  {String(minutes).padStart(2, '0')}<span className="text-sm ml-1 block opacity-70">min</span>
                 </div>
-                <div className="bg-red-600 text-white font-bold text-lg px-3 py-2 rounded-lg min-w-[60px] text-center">
-                  {String(seconds).padStart(2, '0')}<span className="text-xs ml-1 opacity-70">seg</span>
+                <div className="bg-red-600 text-white font-bold text-2xl px-4 py-3 rounded-xl min-w-[80px] text-center">
+                  {String(seconds).padStart(2, '0')}<span className="text-sm ml-1 block opacity-70">seg</span>
                 </div>
               </div>
             </motion.div>
@@ -324,64 +310,65 @@ function Hero() {
               transition={{ delay: 0.35 }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center justify-center gap-2 bg-amber-600 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-xl shadow-amber-600/30 hover:bg-amber-700 hover:shadow-2xl transition-all w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-3 bg-amber-600 text-white text-lg font-bold py-5 px-12 rounded-xl shadow-xl shadow-amber-600/30 hover:bg-amber-700 hover:shadow-2xl transition-all w-full sm:w-auto mb-6"
             >
               <Lock className="w-5 h-5" />
               ¡RESERVAR MI PACK AHORA!
             </motion.a>
 
             {/* Trust */}
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="flex flex-wrap items-center gap-4 mt-5 text-xs text-gray-500">
-              <div className="flex items-center gap-1.5">
-                <Shield className="w-4 h-4 text-green-600" />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-green-600" />
                 <span>Garantía 7 días</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Truck className="w-4 h-4 text-green-600" />
+              <div className="flex items-center gap-2">
+                <Truck className="w-5 h-5 text-green-600" />
                 <span>Entrega inmediata</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Users className="w-4 h-4 text-green-600" />
-                <span>+100 clientes</span>
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-green-600" />
+                <span>+100 clientes atendidos</span>
               </div>
             </motion.div>
           </motion.div>
 
           {/* Product Visual */}
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.2 }} className="relative">
-            <div className="aspect-square max-w-sm mx-auto bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 rounded-3xl shadow-2xl flex items-center justify-center p-10">
-              <div className="text-center text-white">
-                <div className="text-7xl mb-3">🥐</div>
-                <div className="text-2xl font-bold tracking-tight">Pack Completo</div>
-                <div className="text-lg opacity-90">Sin Gluten</div>
-                <div className="text-sm opacity-75 mt-2">40 Recetas + 3 Bónus</div>
-              </div>
+            <div className="relative">
+              <Image 
+                src="/images/ebook-main.jpg" 
+                alt="Pack Completo Sin Gluten" 
+                width={500} 
+                height={500}
+                className="w-full max-w-md mx-auto rounded-3xl shadow-2xl"
+              />
+              
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }} className="absolute -top-4 -right-4 bg-white shadow-lg rounded-xl p-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                    <Check className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="font-bold text-sm">40 Recetas</span>
+                </div>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7 }} className="absolute -bottom-4 -left-4 bg-white shadow-lg rounded-xl p-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="font-bold text-sm">+3 Bónus</span>
+                </div>
+              </motion.div>
             </div>
-
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }} className="absolute -top-3 -right-3 bg-white shadow-lg rounded-xl py-2 px-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                  <Check className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-semibold text-sm">40 Recetas</span>
-              </div>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7 }} className="absolute -bottom-3 -left-3 bg-white shadow-lg rounded-xl py-2 px-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-semibold text-sm">+3 Bónus</span>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="absolute bottom-6 left-1/2 -translate-x-1/2">
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-gray-300">
-          <ChevronDown className="w-6 h-6" />
+          <ChevronDown className="w-8 h-8" />
         </motion.div>
       </motion.div>
     </section>
@@ -390,39 +377,39 @@ function Hero() {
 
 function Beneficios() {
   const beneficios = [
-    { icon: UtensilsCrossed, title: "Recetas Fáciles", description: "Paso a paso. Ingredientes de supermercado." },
-    { icon: Heart, title: "100% Natural", description: "Sin aditivos. Comida real." },
-    { icon: Clock, title: "15-30 min", description: "Listo rápido para el día a día." },
-    { icon: BookOpen, title: "+200 Páginas", description: "Contenido profundo y real." }
+    { icon: UtensilsCrossed, title: "Recetas Fáciles", description: "Paso a paso con ingredientes de supermercado. Sin técnicas complicadas." },
+    { icon: Heart, title: "100% Natural", description: "Sin aditivos, sin conservantes. Comida real para tu cuerpo." },
+    { icon: Timer, title: "15-30 min", description: "Recetas rápidas para el día a día ocupado." },
+    { icon: BookOpen, title: "+200 Páginas", description: "Contenido profundo con consejos y secretos." }
   ];
 
   return (
-    <section id="beneficios" className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-5">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 tracking-tight">
+    <section id="beneficios" className="py-20 bg-white">
+      <div className="max-w-6xl mx-auto px-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
             ¿Por qué este <span className="text-amber-600">pack</span> funciona?
           </h2>
-          <p className="text-gray-600 max-w-xl mx-auto">
-            No es solo un ebook. Es una guía completa para tu nueva forma de comer sin gluten.
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            No es solo un ebook. Es una guía completa para transformar tu forma de comer sin gluten.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {beneficios.map((b, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="bg-neutral-50 rounded-xl p-5 text-center hover:shadow-md transition-shadow"
+              transition={{ delay: i * 0.1 }}
+              className="bg-neutral-50 rounded-2xl p-8 text-center hover:shadow-xl transition-all hover:-translate-y-1"
             >
-              <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <b.icon className="w-6 h-6 text-amber-700" />
+              <div className="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <b.icon className="w-8 h-8 text-amber-700" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{b.title}</h3>
-              <p className="text-gray-500 text-sm">{b.description}</p>
+              <h3 className="font-bold text-xl text-gray-900 mb-3">{b.title}</h3>
+              <p className="text-gray-600">{b.description}</p>
             </motion.div>
           ))}
         </div>
@@ -433,43 +420,95 @@ function Beneficios() {
 
 function Contenido() {
   const contenidos = [
-    { title: "40 Recetas de Panadería", desc: "Panes esponjosos, croissants, pizzas", emoji: "🥐", pages: "120+" },
-    { title: "Guía de Ejercicios", desc: "Rutina completa para celíacos", emoji: "🧘", pages: "40+" },
-    { title: "Infusiones que Sanan", desc: "Tés y tisanas medicinales", emoji: "🍵", pages: "30+" },
-    { title: "Snacks Saludables", desc: "Lanches rápidos y délicieuse", emoji: "🥗", pages: "50+" }
+    { 
+      title: "40 Recetas de Panadería", 
+      desc: "Panes esponjosos, croissants perfectos, pizzas crujientes, bollos y más. Recetas probadas.", 
+      image: "/images/panaderia.jpg",
+      emoji: "🥐", 
+      pages: "120+",
+      color: "from-amber-400 to-amber-600",
+      details: ["Pan francés", "Croissants", "Pizza sin gluten", "Bollos"]
+    },
+    { 
+      title: "Guía de Ejercicios", 
+      desc: "Rutina completa para mantenerte activo. Ejercicios seguros para celíacos.", 
+      image: "/images/ejercicios.jpg",
+      emoji: "🧘", 
+      pages: "40+",
+      color: "from-green-400 to-green-600",
+      details: ["Yoga suave", "Estiramientos", "Cardio ligero", "Rutina diaria"]
+    },
+    { 
+      title: "Infusiones que Sanan", 
+      desc: "Tés y tisanas medicinales para fortalecer tu sistema digestivo.", 
+      image: "/images/infusiones.jpg",
+      emoji: "🍵", 
+      pages: "30+",
+      color: "from-teal-400 to-teal-600",
+      details: ["Té de manzanilla", "Infusión de menta", "Té laxante", "Té suavizante"]
+    },
+    { 
+      title: "Snacks Saludables", 
+      desc: "Lanches rápidos y deliciosos para cuando tenés hambre entre comidas.", 
+      image: "/images/snacks.jpg",
+      emoji: "🥗", 
+      pages: "50+",
+      color: "from-orange-400 to-orange-600",
+      details: ["Barras энергетические", "Galletas", "Frutas", "Mix de frutos secos"]
+    }
   ];
 
   return (
-    <section id="contenido" className="py-16 bg-neutral-50">
-      <div className="max-w-5xl mx-auto px-5">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 tracking-tight">
+    <section id="contenido" className="py-20 bg-neutral-50">
+      <div className="max-w-6xl mx-auto px-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
             Todo lo que <span className="text-amber-600">incluye</span> tu pack
           </h2>
-          <p className="text-gray-600">4 ebooks completos con más de 200 páginas de contenido real.</p>
+          <p className="text-gray-600 text-lg">4 ebooks completos con más de 200 páginas de contenido real y aplicable.</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-8">
           {contenidos.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{ scale: 1.01 }}
-              className="bg-white rounded-xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow"
+              transition={{ delay: i * 0.1 }}
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all"
             >
-              <div className="w-16 h-20 bg-gradient-to-br from-amber-400 to-amber-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">{item.emoji}</span>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-0.5">{item.title}</h3>
-                <p className="text-gray-500 text-sm">{item.desc}</p>
-                <span className="text-amber-600 text-sm font-medium">{item.pages} páginas</span>
-              </div>
-              <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <Check className="w-4 h-4 text-white" />
+              <div className="flex gap-6">
+                <div className="relative w-28 h-36 flex-shrink-0 rounded-xl overflow-hidden">
+                  <Image 
+                    src={item.image} 
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-80`} />
+                  <span className="absolute inset-0 flex items-center justify-center text-4xl">{item.emoji}</span>
+                </div>
+                
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-lg text-gray-900">{item.title}</h3>
+                    <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded-full">{item.pages} páginas</span>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-4">{item.desc}</p>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">Incluye:</p>
+                    <ul className="space-y-1">
+                      {item.details.map((detail, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-sm text-gray-700">
+                          <Check className="w-4 h-4 text-green-500" />
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -480,11 +519,12 @@ function Contenido() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-10 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-6 text-white text-center"
+          className="mt-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-8 text-white text-center"
         >
-          <p className="text-base mb-1">Valor individual:</p>
-          <p className="text-2xl font-bold line-through opacity-70">${PRODUCT.originalPrice * 4}</p>
-          <p className="text-3xl font-bold mt-1">Hoy: solo ${PRODUCT.price}</p>
+          <p className="text-lg mb-2">Valor si compraras por separado:</p>
+          <p className="text-3xl font-bold line-through opacity-70">${PRODUCT.originalPrice * 4}</p>
+          <p className="text-4xl font-bold mt-2">Hoy: solo <span className="text-4xl">${PRODUCT.price}</span></p>
+          <p className="text-sm mt-2 opacity-80">Ahorras $25 (63% de descuento)</p>
         </motion.div>
       </div>
     </section>
@@ -493,22 +533,22 @@ function Contenido() {
 
 function PruebaSocial() {
   const testimonios = [
-    { name: "Marina S.", text: "Nunca imaginé que podía hacer un pan tan esponjoso. Mi familia lo ama!", rating: 5 },
-    { name: "Carlos M.", text: "Después de años logré hacer croissants perfectos. Esto cambió todo.", rating: 5 },
-    { name: "Ana Paula R.", text: "Las recetas son súper fáciles. Los Ingredients consigo en cualquier lado.", rating: 5 },
-    { name: "Miguel Á.", text: "El mejor investimento que hice. Voy a hacer todas las recetas.", rating: 5 }
+    { name: "Marina S.", location: "São Paulo, Brasil", text: "Nunca imaginé que podía hacer un pan tan esponjoso. Mi familia lo ama!", rating: 5 },
+    { name: "Carlos M.", location: "Buenos Aires, Argentina", text: "Después de años logré hacer croissants perfectos. Esto cambió todo.", rating: 5 },
+    { name: "Ana Paula R.", location: "Rio de Janeiro, Brasil", text: "Las recetas son súper fáciles. Los ingredientes los consigo en cualquier lado.", rating: 5 },
+    { name: "Miguel Á.", location: "Santiago, Chile", text: "El mejor investimento que hice. Voy a hacer todas las recetas.", rating: 5 }
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-5">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
             Lo que dicen <span className="text-amber-600">nuestros clientes</span>
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-6">
           {testimonios.map((t, i) => (
             <motion.div
               key={i}
@@ -516,13 +556,21 @@ function PruebaSocial() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-neutral-50 rounded-xl p-5"
+              className="bg-neutral-50 rounded-2xl p-6"
             >
-              <div className="flex gap-0.5 mb-3">
-                {[...Array(t.rating)].map((_, r) => <Star key={r} className="w-4 h-4 text-amber-500 fill-amber-500" />)}
+              <div className="flex gap-1 mb-4">
+                {[...Array(t.rating)].map((_, r) => <Star key={r} className="w-5 h-5 text-amber-500 fill-amber-500" />)}
               </div>
-              <p className="text-gray-700 text-sm mb-3">"{t.text}"</p>
-              <p className="font-semibold text-gray-900 text-sm">- {t.name}</p>
+              <p className="text-gray-700 mb-4">"{t.text}"</p>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold text-amber-700">{t.name.charAt(0)}</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
+                  <p className="text-xs text-gray-500">{t.location}</p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -537,35 +585,35 @@ function FAQ() {
   const faqs = [
     { 
       q: "¿Cómo recibo el producto?", 
-      a: "Inmediatamente después del pagamento, recibes un email con el enlace de descarga. Es simples: haces clic, descargas y listo. Tambien puedes acceder desde tu cuenta en nuestra plataforma."
+      a: "Inmediatamente después del pagamento, recibes un email con el enlace de descarga. Es simple: haces clic, descargas y listo. Tambien puedes acceder desde tu cuenta en nuestra plataforma. El archivo es en formato PDF compatible con cualquier dispositivo."
     },
     { 
       q: "¿Necesito ingredientes especiales o difíciles de encontrar?", 
-      a: "No! Todos los ingredientes los conseguis en cualquier supermercado de tu ciudad. Harina de arroz, almidón de mandioca, leche sin lactose - todo lo básico que ya existe en Argentina."
+      a: "No! Todos los ingredientes los conseguís en cualquier supermercado de tu ciudad. Harina de arroz, almidón de mandioca, leche sin lactosa - todo lo básico que ya existe en Argentina, Brasil, Chile, Uruguay y toda Latinoamérica."
     },
     { 
       q: "¿Funciona si nunca cociné antes?", 
-      a: "ABSOLUTAMENTE. Las recetas están diseñadas para principiantes. Cada paso está detallado con tiempos, temperaturas y consejos. Solo seguí las instrucciones."
+      a: "ABSOLUTAMENTE. Las recetas están diseñadas para principiantes totales. Cada paso está detallado con tiempos exactos, temperaturas y consejos. Solo seguí las instrucciones y vas a quedar sorprendido."
     },
     { 
       q: "¿Qué pasa si no me gusta el producto?", 
-      a: "Tienes 7 días de garantía. Si por cualquier razón no quedás satisfecho, te devuelvo el 100% del dinheiro. Sin perguntas, sin complicaciones."
+      a: "Tenés 7 días de garantía TOTAL. Si por cualquier razón no quedás satisfecho, te devuelvo el 100% del dinero. Sin preguntas, sin complicaciones, sin letra pequeña. Tu satisfacción es mi prioridad."
     },
     { 
       q: "¿Es compatible con mi país?", 
-      a: "Sí! El ebook está en español y las recetas usan ingredientes que se encuentran en TODO Latinoamérica. Argentina, Uruguay, Chile, Perú, Colombia - todos los países."
+      a: "Sí! El ebook está 100% en español y las recetas usan ingredientes que se encuentran en TODO Latinoamérica. Argentina, Uruguay, Chile, Perú, Colombia, México - todos los países. Las medidas son universales."
     },
     { 
       q: "¿Cuánto tiempo toma hacer las recetas?", 
-      a: "La mayoría de las recetas están diseñadas para 15-30 minutos. Hay algunas más rápidas (10 min) y otras más elaboradas (45 min) para quando tenés más tiempo."
+      a: "La mayoría de las recetas están diseñadas para 15-30 minutos. Hay algunas rápidas (10 min) para cuando tenés poco tiempo, y otras más elaboradas (45 min) para quando tenés más tiempo y querés algo especial."
     }
   ];
 
   return (
-    <section className="py-16 bg-neutral-50">
+    <section className="py-20 bg-neutral-50">
       <div className="max-w-2xl mx-auto px-5">
-        <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-          <h2 className="text-2xl font-bold text-gray-900">Preguntas <span className="text-amber-600">Frecuentes</span></h2>
+        <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900">Preguntas <span className="text-amber-600">Frecuentes</span></h2>
         </motion.div>
 
         <div className="space-y-3">
@@ -580,9 +628,9 @@ function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-4 text-left"
+                className="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50 transition-colors"
               >
-                <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
+                <span className="font-semibold text-gray-900 pr-4">{faq.q}</span>
                 {openIndex === i ? (
                   <Minus className="w-5 h-5 text-amber-600 flex-shrink-0" />
                 ) : (
@@ -597,7 +645,7 @@ function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <p className="px-4 pb-4 text-gray-600 text-sm">{faq.a}</p>
+                    <p className="px-5 pb-5 text-gray-600">{faq.a}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -623,61 +671,61 @@ function Oferta() {
   const seconds = timeLeft % 60;
 
   return (
-    <section id="comprar" className="py-16 bg-gray-900">
+    <section id="comprar" className="py-20 bg-gray-900">
       <div className="max-w-2xl mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl p-8 md:p-10 text-center"
+          className="bg-white rounded-3xl p-8 md:p-12 text-center"
         >
-          {/* Urgency */}
+          {/* Urgency Banner */}
           <div className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full mb-6">
             <Clock className="w-4 h-4" />
             <span className="font-bold text-sm tracking-wide uppercase">¡Última Chance!</span>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             Oferta de <span className="text-amber-600">Lanzamiento</span>
           </h2>
 
-          <p className="text-gray-600 mb-6">
-            {PRODUCT.discount}% de descuento. No vuelven a este precio.
+          <p className="text-gray-600 text-lg mb-6">
+            {PRODUCT.discount}% de descuento. <strong>No vuelven a este precio</strong>. Después de 10 minutos, vuelve a $39.99.
           </p>
 
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="text-4xl font-bold text-gray-400 line-through">${PRODUCT.originalPrice}</span>
-            <span className="text-5xl font-bold text-amber-600">${PRODUCT.price}</span>
+          {/* Price */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <span className="text-5xl font-bold text-gray-400 line-through">${PRODUCT.originalPrice}</span>
+            <span className="text-6xl font-bold text-amber-600">${PRODUCT.price}</span>
           </div>
 
           {/* Countdown 10 min */}
-          <div className="flex items-center justify-center gap-2 mb-6 text-sm">
-            <Clock className="w-4 h-4 text-red-600" />
-            <span className="text-red-600 font-bold">Expires en:</span>
-            <div className="bg-red-600 text-white font-bold text-lg px-3 py-2 rounded-lg">
-              {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-            </div>
+          <div className="bg-red-600 text-white font-bold text-3xl py-4 rounded-xl mb-6">
+            {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
           </div>
 
-          {/* CTA */}
           <motion.a
             href={CHECKOUT_URL}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center justify-center gap-2 bg-amber-600 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-xl shadow-amber-600/30 hover:bg-amber-700 transition-all w-full"
+            className="inline-flex items-center justify-center gap-3 bg-amber-600 text-white text-xl font-bold py-5 px-12 rounded-xl shadow-xl shadow-amber-600/30 hover:bg-amber-700 transition-all w-full"
           >
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-6 h-6" />
             ¡MISMO PACK AHORA!
           </motion.a>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-6 text-xs text-gray-500">
-            <div className="flex items-center gap-1">
-              <Shield className="w-4 h-4 text-green-600" />
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-gray-500">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-green-600" />
               <span>Garantía 7 días</span>
             </div>
-            <div className="flex items-center gap-1">
-              <CreditCard className="w-4 h-4 text-green-600" />
-              <span>Pago seguro</span>
+            <div className="flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-green-600" />
+              <span>Pago 100% seguro</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Lock className="w-5 h-5 text-green-600" />
+              <span>Datos protegidos</span>
             </div>
           </div>
         </motion.div>
@@ -688,15 +736,20 @@ function Oferta() {
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 py-10">
-      <div className="max-w-5xl mx-auto px-5 text-center">
+    <footer className="bg-gray-900 text-gray-400 py-12">
+      <div className="max-w-6xl mx-auto px-5 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
-          <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center">
-            <UtensilsCrossed className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
+            <UtensilsCrossed className="w-6 h-6 text-white" />
           </div>
-          <span className="font-bold text-white">Sin Gluten<span className="text-amber-600">SinDrama</span></span>
+          <span className="font-bold text-xl text-white">Sin Gluten<span className="text-amber-600">SinDrama</span></span>
         </div>
-        <p className="text-xs opacity-60">© 2024 Sin Gluten Sin Drama. Todos los derechos reservados.</p>
+        <p className="text-sm opacity-60 mb-4">© 2024 Sin Gluten Sin Drama. Todos los derechos reservados.</p>
+        <div className="flex justify-center gap-6 text-sm">
+          <a href="#" className="hover:text-white transition-colors">Términos</a>
+          <a href="#" className="hover:text-white transition-colors">Privacidad</a>
+          <a href="#" className="hover:text-white transition-colors">Contacto</a>
+        </div>
       </div>
     </footer>
   );
