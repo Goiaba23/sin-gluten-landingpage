@@ -424,37 +424,29 @@ function Contenido() {
       title: "40 Recetas de Panadería", 
       desc: "Panes esponjosos, croissants perfectos, pizzas crujientes, bollos y más. Recetas probadas.", 
       image: "/images/panaderia.jpg",
-      emoji: "🥐", 
       pages: "120+",
-      color: "from-amber-400 to-amber-600",
       details: ["Pan francés", "Croissants", "Pizza sin gluten", "Bollos"]
     },
     { 
       title: "Guía de Ejercicios", 
       desc: "Rutina completa para mantenerte activo. Ejercicios seguros para celíacos.", 
       image: "/images/ejercicios.jpg",
-      emoji: "🧘", 
       pages: "40+",
-      color: "from-green-400 to-green-600",
       details: ["Yoga suave", "Estiramientos", "Cardio ligero", "Rutina diaria"]
     },
     { 
       title: "Infusiones que Sanan", 
       desc: "Tés y tisanas medicinales para fortalecer tu sistema digestivo.", 
       image: "/images/infusiones.jpg",
-      emoji: "🍵", 
       pages: "30+",
-      color: "from-teal-400 to-teal-600",
       details: ["Té de manzanilla", "Infusión de menta", "Té laxante", "Té suavizante"]
     },
     { 
       title: "Snacks Saludables", 
       desc: "Lanches rápidos y deliciosos para cuando tenés hambre entre comidas.", 
       image: "/images/snacks.jpg",
-      emoji: "🥗", 
       pages: "50+",
-      color: "from-orange-400 to-orange-600",
-      details: ["Barras энергетические", "Galletas", "Frutas", "Mix de frutos secos"]
+      details: ["Barras energéticas", "Galletas", "Frutas", "Mix de frutos secos"]
     }
   ];
 
@@ -486,8 +478,6 @@ function Contenido() {
                     fill
                     className="object-cover"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-80`} />
-                  <span className="absolute inset-0 flex items-center justify-center text-4xl">{item.emoji}</span>
                 </div>
                 
                 <div className="flex-1">
