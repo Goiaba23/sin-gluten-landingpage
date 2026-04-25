@@ -12,9 +12,9 @@ import { Check, X, Clock, Star, ArrowRight, Shield, Zap, BookOpen, UtensilsCross
 const CHECKOUT_URL = "https://ggcheckout.app/checkout/v4/gyeWcozJqIUWAno9y1tj";
 
 const PRODUCT = {
-  price: 14.99,
+  price: 7.00,
   originalPrice: 39.99,
-  discount: 63
+  discount: 82
 };
 
 // ============================================
