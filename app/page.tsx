@@ -9,7 +9,7 @@ import { Check, X, Clock, Star, ArrowRight, Shield, Zap, BookOpen, UtensilsCross
 // CONFIGURAÇÕES
 // ============================================
 
-const CHECKOUT_URL = "https://buy.stripe.com/pmd_1TQ90REP5dGBUYhKUw4KMcB3";
+const CHECKOUT_URL = "https://buy.stripe.com/test_5kQ7sLaZA1wEavW0D253O00";
 
 const PRODUCT = {
   price: 9.00,
