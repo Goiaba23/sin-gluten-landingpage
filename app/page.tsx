@@ -9,7 +9,7 @@ import { Check, X, Clock, Star, ArrowRight, Shield, Zap, BookOpen, UtensilsCross
 // CONFIGURAÇÕES
 // ============================================
 
-const CHECKOUT_URL = "https://ggcheckout.app/checkout/v4/gyeWcozJqIUWAno9y1tj";
+const CHECKOUT_URL = "https://ggcheckout.app/checkout/v3/gyeWcozJqIUWAno9y1tj";
 
 const PRODUCT = {
   price: 7.00,
