@@ -9,12 +9,12 @@ import { Check, X, Clock, Star, ArrowRight, Shield, Zap, BookOpen, UtensilsCross
 // CONFIGURAÇÕES
 // ============================================
 
-const CHECKOUT_URL = "https://buy.stripe.com/test_5kQ7sLaZA1wEavW0D253O00";
+const CHECKOUT_URL = "https://ggcheckout.app/checkout/v4/gyeWcozJqIUWAno9y1tj";
 
 const PRODUCT = {
-  price: 9.00,
+  price: 14.99,
   originalPrice: 39.99,
-  discount: 77
+  discount: 63
 };
 
 // ============================================
